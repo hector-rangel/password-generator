@@ -54,8 +54,46 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
+}
 
+function generatePassword () {
+  var options = getPasswordOptions();
+  var result = [];
+  var possibleChar = [];
+  var guaranteedChar = [];
+  if (options.hasSpecialChar) {
+    possibleChar = possibleChar.concat(useSpecial);
+    guaranteedChar.push(getRandomArrayEl(useSpecial))
+  }
+  if (options.hasNumberChar) {
+    possibleChar = possibleChar.concat(useNumber);
+    guaranteedChar.push(getRandomArrayEl(useNumber))
+  }
+  if (options.hasLowerChar) {
+    possibleChar = possibleChar.concat(useLower);
+    guaranteedChar.push(getRandomArrayEl(useLower))
+  }
+  if (options.hasUpperChar) {
+    possibleChar = possibleChar.concat(userUpper);
+    guaranteedChar.push(getRandomArrayEl(userUpper))
+  }
+  for (var i = 0; i < options.passLength; i++) {
+    var randomPassword = getRandomArrayEl(possibleChar);
+    result.push(randomPassword);
+  }
+  return result.join('');
+};
+
+// Get references to the #generate element
+var generateBtn = document.querySelector("#generate");
+
+// Write password to the #password input
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password;
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
