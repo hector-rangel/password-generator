@@ -1,31 +1,50 @@
 // Assignment code here
-var lower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var upper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var specialCharacters = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", " < ", "=", " > ", " ? ", "@", "[", "\\", "]", " ^ ", "_", "`", "{", "|", "}", "~"];
-var allNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+var useLower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var userUpper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+var useSpecial = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", " < ", "=", " > ", " ? ", "@", "[", "\\", "]", " ^ ", "_", "`", "{", "|", "}", "~"];
+var useNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-function generatePassword() {
-  var allCharacters = prompt("choose a length of at least 8 characters and no more than 128");
-  if (
-    allCharacters < 8 || allCharacters > 128) {
-    alert("please, try again");
-    return generatePassword();
+function getPasswordOptions() {
+  var passLength = parseInt(prompt("How long do you want your password to be?"));
+  if (isNaN(passLength) === true) {
+    alert("Must be a number!");
+    return
   }
-  var includeLower = confirm("Do you want to add a lowercase?");
-  var includeUpper = confirm("Do you want to use a uppercase");
-  var special = confirm("Do you want to use special characters");
-  var num = confirm("Do you want to use a number");
-  if (
-    !includeLower && !includeUpper && !special && !num
-  )
+  if (passLength < 8 || passLength > 128) {
+    alert("Must be at least 8 characters, and less than 128");
+    return
+  }
+
+  var hasSpecialChar = confirm("Do you want to use special characters?");
+
+  var hasNumberChar = confirm("Do you want to use numbers?");
+
+  var hasLowerChar = confirm("Do you want to use lower case letters?");
+
+  var hasUpperChar = confirm("Do you want to use upper case letters?");
+
+  if (!hasSpecialChar && !hasNumberChar && !hasLowerChar && !hasUpperChar)
   {
     alert("password must include at least one of the following lowercase, uppercase, special or number");
-  return generatePassword();
-  };
+    return;
+}
+
+// storing the user input into an object
+var passwordOptions = {
+  passLength: passLength,
+  hasSpecialChar: hasSpecialChar,
+  hasNumberChar: hasNumberChar,
+  hasLowerChar: hasLowerChar,
+  hasUpperChar: hasUpperChar
+}
+return passwordOptions;
 };
 
-
-
+function getRandomArrayEl(arr) {
+  var randIndex = Math.floor(Math.random() * arr.length);
+  var randEl = arr[randIndex];
+  return randEl;
+};
 
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
