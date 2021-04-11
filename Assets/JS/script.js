@@ -8,25 +8,21 @@ function getPasswordOptions() {
   var passLength = parseInt(prompt("How long do you want your password to be?"));
   if (isNaN(passLength) === true) {
     alert("Must be a number!");
-    return
+    return getPasswordOptions();
   }
   if (passLength < 8 || passLength > 128) {
     alert("Must be at least 8 characters, and less than 128");
-    return
+    return getPasswordOptions();
   }
 
   var hasSpecialChar = confirm("Do you want to use special characters?");
-
   var hasNumberChar = confirm("Do you want to use numbers?");
-
   var hasLowerChar = confirm("Do you want to use lower case letters?");
-
   var hasUpperChar = confirm("Do you want to use upper case letters?");
-
   if (!hasSpecialChar && !hasNumberChar && !hasLowerChar && !hasUpperChar)
   {
     alert("password must include at least one of the following lowercase, uppercase, special or number");
-    return;
+    return getPasswordOptions();
 }
 
 // storing the user input into an object
@@ -46,17 +42,8 @@ function getRandomArrayEl(arr) {
   return randEl;
 };
 
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password;
-}
-
-function generatePassword () {
+// generate password arrays 
+function generatePassword() {
   var options = getPasswordOptions();
   var result = [];
   var possibleChar = [];
@@ -93,7 +80,6 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
   passwordText.value = password;
 }
-
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
